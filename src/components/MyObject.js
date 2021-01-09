@@ -64,7 +64,7 @@ const MyObject = ({navigation, favObjects, dispatch, route}) => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <TopNavigation title='MyApp' alignment='center' accessoryLeft={BackAction}/>
+            <TopNavigation title={route.params.objectData.name} alignment='center'/>
             <Layout style={styles.container}>
                 <Layout style={styles.informationContainer}>
                     <Layout style={styles.title}>
