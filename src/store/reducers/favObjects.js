@@ -1,18 +1,18 @@
-const initialState = { favOjectID: [] }
+const initialState = { favObjectID: [] }
 
-function favList(state = initialState, action) {
+function favObjects(state = initialState, action) {
     let nextState;
     switch (action.type) {
-        case 'SAVE_LOCATION':
+        case 'SAVE_OBJECT':
             nextState = {
                 ...state,
-                favOjectID: [...state.favOjectID, action.value]
+                favObjectID: [...state.favObjectID, action.value]
             };
             return nextState || state
-        case 'UNSAVE_LOCATION':
+        case 'UNSAVE_OBJECT':
             nextState = {
                 ...state,
-                favOjectID: state.favOjectID.filter(id => id !== action.value)
+                favObjectID: state.favObjectID.filter(id => id !== action.value)
             };
             return nextState || state
         default:
@@ -20,4 +20,4 @@ function favList(state = initialState, action) {
     }
 }
 
-export default favList;
+export default favObjects;

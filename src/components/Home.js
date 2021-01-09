@@ -3,17 +3,23 @@ import {Layout, List, Text, TopNavigation} from '@ui-kitten/components';
 import {StyleSheet, SafeAreaView} from 'react-native';
 import ObjectListItem from "./ObjectListItem";
 import fakeObjects from "../helpers/FakeObjects";
+import {connect} from 'react-redux';
 
 
-const Home = ({navigation}) => {
+const Home = ({navigation, favObjects}) => {
     const [objects, setObjects] = useState(fakeObjects);
 
-    const navigateToLocationDetails = async(objectData) => {
+
+    const navigateToObjectDetails = async(objectData) => {
         navigation.navigate("ViewMyObject", {objectData});
     };
 
+    const amIaFavObject = (objectID) => {
+        return (favObjects.findIndex(i => i === objectID) !== -1);
+    };
+
     const renderItem = ({item}) => {
-        return (<ObjectListItem objectData={item} onClick={navigateToLocationDetails} />);
+        return (<ObjectListItem objectData={item} onClick={navigateToObjectDetails} isFav={amIaFavObject(item.id)} />);
     }
 
     return (
@@ -24,13 +30,20 @@ const Home = ({navigation}) => {
             </Layout>
             <List
                 data={objects}
+                extraData={favObjects}
                 renderItem={renderItem}
             />
         </SafeAreaView>
     );
 };
 
-export default Home;
+const mapStateToProps = (state) => {
+    return {
+        favObjects: state.favObjectID
+    }
+}
+
+export default connect(mapStateToProps)(Home);
 
 const styles = StyleSheet.create({
     container: {

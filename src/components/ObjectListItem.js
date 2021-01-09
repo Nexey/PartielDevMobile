@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Layout, Text} from '@ui-kitten/components';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
-const ObjectListItem = ({objectData, onClick}) => {
+const ObjectListItem = ({objectData, onClick, isFav = false}) => {
     return (
         <TouchableOpacity onPress={() => (onClick(objectData))}>
             <Layout style={styles.container}>
@@ -11,12 +11,6 @@ const ObjectListItem = ({objectData, onClick}) => {
                         <Text category='h1'>
                             {objectData.name}
                         </Text>
-                    </Layout>
-                    <Layout style={styles.statsContainer}>
-                        <Button
-                            title="Favori"
-                            onPress={() => (console.log("favori"))}
-                        >Rajouter aux favoris</Button>
                     </Layout>
                 </Layout>
             </Layout>

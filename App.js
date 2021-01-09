@@ -10,16 +10,18 @@ import {EvaIconsPack} from '@ui-kitten/eva-icons';
 import Store from './src/store/config';
 import AppNavigator from "./src/navigation/Navigation";
 import {FontAwesome5IconsPack} from "./src/helpers/fontawesome5-icons";
+import {Provider} from "react-redux";
 
 export default function App() {
-  return (
-      <>
-        <IconRegistry icons={[EvaIconsPack, FeatherIconsPack, MaterialIconsPack, FontAwesome5IconsPack]} />
-        <ApplicationProvider store={Store} {...eva} theme={{ ...eva.light, ...theme }}>
-          <AppNavigator/>
-          <StatusBar style="auto" />
-        </ApplicationProvider>
-      </>
-  );
+    return (
+        <>
+            <IconRegistry icons={[EvaIconsPack, FeatherIconsPack, MaterialIconsPack, FontAwesome5IconsPack]} />
+            <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+                <Provider store={Store} >
+                    <AppNavigator/>
+                    <StatusBar style="auto" />
+                </Provider>
+            </ApplicationProvider>
+        </>
+    );
 }
-

@@ -1,8 +1,9 @@
 import React, {useEffect} from 'react';
 import {Button, Icon, Layout, Text, TopNavigation, TopNavigationAction} from '@ui-kitten/components';
 import {SafeAreaView, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 
-const MyObject = ({navigation, route}) => {
+const MyObject = ({navigation, favObjects, dispatch, route}) => {
     const BackIcon = (props) => (
         <Icon {...props} name='arrow-back' />
     );
@@ -18,6 +19,18 @@ const MyObject = ({navigation, route}) => {
     //console.log(JSON.stringify(locationData.coord.lat + locationData.coord.lon));
     //*/
 
+
+    // On pourrait définir les actions dans un fichier à part
+    const saveObject = async () => {
+        const action = { type: 'SAVE_OBJECT', value: route.params.objectData.id };
+        dispatch(action);
+    }
+
+    const unsaveObject = async () => {
+        const action = { type: 'UNSAVE_OBJECT', value: route.params.objectData.id };
+        dispatch(action);
+    }
+
     const navigateBack = () => {
         navigation.goBack();
     };
@@ -25,6 +38,29 @@ const MyObject = ({navigation, route}) => {
     const BackAction = () => (
         <TopNavigationAction icon={BackIcon} onPress={navigateBack}/>
     );
+
+    const displaySaveObject = () => {
+        if (favObjects.findIndex(i => i === route.params.objectData.id) !== -1) {
+            // L'object est sauvegardé
+            return (
+                <Button
+                    title='Retirer des favoris'
+                    onPress={unsaveObject}
+                >
+                    Retirer des favoris
+                </Button>
+            );
+        }
+        // L'object n'est pas sauvegardé
+        return (
+            <Button
+                title='Ajouter aux favoris'
+                onPress={saveObject}
+            >
+                Ajouter aux favoris
+            </Button>
+        );
+    }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -39,10 +75,8 @@ const MyObject = ({navigation, route}) => {
                             ID : {route.params.objectData.id}
                         </Text>
                     </Layout>
-                    <Layout style={styles.statsContainer}>
-                        <Button
-                            title="Favori"
-                        >Rajouter aux favoris</Button>
+                    <Layout>
+                        {displaySaveObject()}
                     </Layout>
                 </Layout>
             </Layout>
@@ -50,7 +84,13 @@ const MyObject = ({navigation, route}) => {
     );
 };
 
-export default MyObject;
+const mapStateToProps = (state) => {
+    return {
+        favObjects: state.favObjectID
+    }
+}
+
+export default connect(mapStateToProps)(MyObject);
 
 const styles = StyleSheet.create({
     containerLoading: {
