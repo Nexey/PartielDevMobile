@@ -6,8 +6,9 @@ import {ApplicationProvider, IconRegistry} from '@ui-kitten/components';
 import {FeatherIconsPack} from "./src/helpers/feather-icons";
 import {MaterialIconsPack} from "./src/helpers/material-icons";
 import {EvaIconsPack} from '@ui-kitten/eva-icons';
+import { PersistGate } from 'redux-persist/integration/react';
 
-import Store from './src/store/config';
+import { Store, Persistor } from './src/store/config';
 import AppNavigator from "./src/navigation/Navigation";
 import {FontAwesome5IconsPack} from "./src/helpers/fontawesome5-icons";
 import {Provider} from "react-redux";
@@ -18,8 +19,10 @@ export default function App() {
             <IconRegistry icons={[EvaIconsPack, FeatherIconsPack, MaterialIconsPack, FontAwesome5IconsPack]} />
             <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
                 <Provider store={Store} >
-                    <AppNavigator/>
-                    <StatusBar style="auto" />
+                    <PersistGate loading={null} persistor={Persistor}>
+                        <AppNavigator/>
+                        <StatusBar style="auto" />
+                    </PersistGate>
                 </Provider>
             </ApplicationProvider>
         </>
