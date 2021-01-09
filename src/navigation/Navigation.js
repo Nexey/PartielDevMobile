@@ -1,35 +1,37 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {BottomNavigation, BottomNavigationTab, Icon, Text} from '@ui-kitten/components';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {BottomNavigation, BottomNavigationTab, Icon} from '@ui-kitten/components';
 import Home from "../components/Home";
+import MyObject from "../components/MyObject"
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-
 const StarIcon = (props) => (
-    <Icon {...props} name='star' width={24} height={24} fill='gold'/>
+    <Icon {...props} name='star' pack="feather" width={24} height={24}/>
 );
+
 const SearchIcon = (props) => (
-    <Icon {...props} name='search-outline' />
+    <Icon {...props} name='home' pack="feather" width={24} height={24}/>
 );
 
 const BottomTabBar = ({ navigation, state }) => (
     <BottomNavigation
         selectedIndex={state.index}
         onSelect={index => navigation.navigate(state.routeNames[index])}>
-        <BottomNavigationTab title='Recherche' icon={SearchIcon}/>
+        <BottomNavigationTab title='Home' icon={SearchIcon}/>
         <BottomNavigationTab title='Mes Favoris' icon={StarIcon}>Test</BottomNavigationTab>
     </BottomNavigation>
 );
 
 const TabNavigator = () => (
     <Navigator
-        initialRouteName="Search"
+        initialRouteName="ViewHome"
         tabBar={props => <BottomTabBar {...props} />}
     >
-        <Screen name='ViewSearch' component={Home}/>
+        <Screen name='ViewHome' component={Home}/>
         <Screen name='ViewFavoris' component={Home}/>
+        <Screen name='ViewMyObject' component={MyObject}/>
     </Navigator>
 );
 

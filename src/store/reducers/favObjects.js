@@ -1,4 +1,4 @@
-const initialState = { favRestaurantsID: [] }
+const initialState = { favOjectID: [] }
 
 function favList(state = initialState, action) {
     let nextState;
