@@ -36,7 +36,7 @@ const MyObject = ({navigation, favObjects, dispatch, route}) => {
     };
 
     const BackAction = () => (
-        <TopNavigationAction icon={BackIcon} onPress={navigateBack}/>
+        <TopNavigationAction icon={BackIcon} onPress={navigateBack} />
     );
 
     const displaySaveObject = () => {
@@ -64,7 +64,7 @@ const MyObject = ({navigation, favObjects, dispatch, route}) => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <TopNavigation title={route.params.objectData.name} alignment='center'/>
+            <TopNavigation title={route.params.objectData.name} alignment='center' accessoryLeft={BackAction}/>
             <Layout style={styles.container}>
                 <Layout style={styles.informationContainer}>
                     <Layout style={styles.title}>
