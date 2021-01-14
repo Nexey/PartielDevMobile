@@ -12,7 +12,6 @@ import { Store, Persistor } from './src/store/config';
 import AppNavigator from "./src/navigation/NavigationBis";
 import {FontAwesome5IconsPack} from "./src/helpers/fontawesome5-icons";
 import {Provider} from "react-redux";
-import {NavigationContainer} from "@react-navigation/native";
 
 export default function App() {
     return (
@@ -21,10 +20,8 @@ export default function App() {
             <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
                 <Provider store={Store} >
                     <PersistGate loading={null} persistor={Persistor}>
-                        <NavigationContainer>
-                            <AppNavigator/>
-                            <StatusBar style="auto" />
-                        </NavigationContainer>
+                        <AppNavigator/>
+                        <StatusBar style="auto" />
                     </PersistGate>
                 </Provider>
             </ApplicationProvider>

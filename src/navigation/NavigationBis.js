@@ -1,16 +1,19 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {BottomNavigation, BottomNavigationTab, Icon} from '@ui-kitten/components';
 import Colors from '../definitions/Colors';
 import MyObject from "../components/MyObject";
 import FavObjects from "../components/FavObjects";
 import Home from "../components/Home";
+import {NavigationContainer} from "@react-navigation/native";
 
 const SearchNavigation = createStackNavigator();
 const FavNavigation = createStackNavigator();
 const TabNavigation = createBottomTabNavigator();
 
 function searchStackScreens() {
+
     return (
         <SearchNavigation.Navigator
             initialRouteName="ViewSearch"
@@ -48,21 +51,40 @@ function favStackScreens() {
     )
 };
 
+const StarIcon = (props) => (
+    <Icon {...props} name='star' pack="feather" width={24} height={24}/>
+);
+
+const SearchIcon = (props) => (
+    <Icon {...props} name='home' pack="feather" width={24} height={24}/>
+);
+
+const BottomTabBar = ({ navigation, state }) => (
+    <BottomNavigation
+        selectedIndex={state.index}
+        onSelect={index => navigation.navigate(state.routeNames[index])}>
+        <BottomNavigationTab title='Home' icon={SearchIcon}/>
+        <BottomNavigationTab title='Mes Favoris' icon={StarIcon}>Test</BottomNavigationTab>
+    </BottomNavigation>
+);
+
 function RootStack() {
     return (
-        <TabNavigation.Navigator
-            tabBarOptions={{
-                activeTintColor: Colors.mainGreen,
-            }}>
-            <TabNavigation.Screen
-                name="Recherche"
-                component={searchStackScreens}
-            />
-            <TabNavigation.Screen
-                name="Favoris"
-                component={favStackScreens}
-            />
-        </TabNavigation.Navigator>
+        <NavigationContainer>
+            <TabNavigation.Navigator
+                tabBarOptions={{
+                    activeTintColor: Colors.mainGreen,
+                }}>
+                <TabNavigation.Screen
+                    name="Recherche"
+                    component={searchStackScreens}
+                />
+                <TabNavigation.Screen
+                    name="Favoris"
+                    component={favStackScreens}
+                />
+            </TabNavigation.Navigator>
+        </NavigationContainer>
     );
 }
 
