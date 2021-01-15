@@ -10,7 +10,6 @@ import {createStackNavigator} from "@react-navigation/stack";
 const { Navigator, Screen } = createBottomTabNavigator();
 const SearchNavigation = createStackNavigator();
 const FavNavigation = createStackNavigator();
-const TabNavigation = createBottomTabNavigator();
 
 const StarIcon = (props) => (
     <Icon {...props} name='star' pack="feather" width={24} height={24}/>

@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {Button, Icon, Layout, Text, TopNavigation, TopNavigationAction} from '@ui-kitten/components';
 import {SafeAreaView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import {mapStateToProps, saveObject, unsaveObject} from "../helpers/favActionHelpers";
 
 const MyObject = ({navigation, favObjects, dispatch, route}) => {
     const BackIcon = (props) => (
@@ -20,17 +21,6 @@ const MyObject = ({navigation, favObjects, dispatch, route}) => {
     //*/
 
 
-    // On pourrait définir les actions dans un fichier à part
-    const saveObject = async () => {
-        const action = { type: 'SAVE_OBJECT', value: route.params.objectData.id };
-        dispatch(action);
-    }
-
-    const unsaveObject = async () => {
-        const action = { type: 'UNSAVE_OBJECT', value: route.params.objectData.id };
-        dispatch(action);
-    }
-
     const navigateBack = () => {
         navigation.goBack();
     };
@@ -45,7 +35,7 @@ const MyObject = ({navigation, favObjects, dispatch, route}) => {
             return (
                 <Button
                     title='Retirer des favoris'
-                    onPress={unsaveObject}
+                    onPress={() => unsaveObject(route.params.objectData.id, dispatch)}
                 >
                     Retirer des favoris
                 </Button>
@@ -55,7 +45,7 @@ const MyObject = ({navigation, favObjects, dispatch, route}) => {
         return (
             <Button
                 title='Ajouter aux favoris'
-                onPress={saveObject}
+                onPress={() => saveObject(route.params.objectData.id, dispatch)}
             >
                 Ajouter aux favoris
             </Button>
@@ -64,7 +54,7 @@ const MyObject = ({navigation, favObjects, dispatch, route}) => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <TopNavigation title={route.params.objectData.name} alignment='center' accessoryLeft={BackAction}/>
+            <TopNavigation title={route.params.objectData.name} alignment='center'/>
             <Layout style={styles.container}>
                 <Layout style={styles.informationContainer}>
                     <Layout style={styles.title}>
@@ -83,12 +73,6 @@ const MyObject = ({navigation, favObjects, dispatch, route}) => {
         </SafeAreaView>
     );
 };
-
-const mapStateToProps = (state) => {
-    return {
-        favObjects: state.favObjectID
-    }
-}
 
 export default connect(mapStateToProps)(MyObject);
 

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import ObjectListItem from '../components/ObjectListItem';
 import {Layout, List} from "@ui-kitten/components";
 import fakeObjects from "../helpers/FakeObjects";
+import {mapStateToProps} from "../helpers/favActionHelpers";
 
 const FavObjects = ({ navigation, favObjects }) => {
     const [objects, setObjects] = useState([]);
@@ -74,11 +75,7 @@ const FavObjects = ({ navigation, favObjects }) => {
     );
 };
 
-const mapStateToProps = (state) => {
-    return {
-        favObjects: state.favObjectID
-    }
-}
+
 export default connect(mapStateToProps)(FavObjects);
 
 const styles = StyleSheet.create({

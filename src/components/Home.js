@@ -4,6 +4,7 @@ import {StyleSheet, SafeAreaView} from 'react-native';
 import ObjectListItem from "./ObjectListItem";
 import fakeObjects from "../helpers/FakeObjects";
 import {connect} from 'react-redux';
+import {mapStateToProps} from "../helpers/favActionHelpers";
 
 
 const Home = ({navigation, favObjects}) => {
@@ -36,12 +37,6 @@ const Home = ({navigation, favObjects}) => {
         </SafeAreaView>
     );
 };
-
-const mapStateToProps = (state) => {
-    return {
-        favObjects: state.favObjectID
-    }
-}
 
 export default connect(mapStateToProps)(Home);
 
