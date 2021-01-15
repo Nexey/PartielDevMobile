@@ -2,55 +2,9 @@ import React, {useEffect} from 'react';
 import {Button, Icon, Layout, Text, TopNavigation, TopNavigationAction} from '@ui-kitten/components';
 import {SafeAreaView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import {mapStateToProps, saveObject, unsaveObject} from "../helpers/favActionHelpers";
+import {displaySaveObject, mapStateToProps, saveObject, unsaveObject} from "../helpers/favActionHelpers";
 
-const MyObject = ({navigation, favObjects, dispatch, route}) => {
-    const BackIcon = (props) => (
-        <Icon {...props} name='arrow-back' />
-    );
-
-    /*
-    useEffect(() => {
-        (async () => {
-            let test = await getLocationNameByLatLon(locationData.coord.lat, locationData.coord.lon);
-            console.log(JSON.stringify(test.data[0]));
-        })();
-    }, [])
-
-    //console.log(JSON.stringify(locationData.coord.lat + locationData.coord.lon));
-    //*/
-
-
-    const navigateBack = () => {
-        navigation.goBack();
-    };
-
-    const BackAction = () => (
-        <TopNavigationAction icon={BackIcon} onPress={navigateBack} />
-    );
-
-    const displaySaveObject = () => {
-        if (favObjects.findIndex(i => i === route.params.objectData.id) !== -1) {
-            // L'object est sauvegardé
-            return (
-                <Button
-                    title='Retirer des favoris'
-                    onPress={() => unsaveObject(route.params.objectData.id, dispatch)}
-                >
-                    Retirer des favoris
-                </Button>
-            );
-        }
-        // L'object n'est pas sauvegardé
-        return (
-            <Button
-                title='Ajouter aux favoris'
-                onPress={() => saveObject(route.params.objectData.id, dispatch)}
-            >
-                Ajouter aux favoris
-            </Button>
-        );
-    }
+const MyObject = ({favObjects, dispatch, route}) => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -66,7 +20,7 @@ const MyObject = ({navigation, favObjects, dispatch, route}) => {
                         </Text>
                     </Layout>
                     <Layout>
-                        {displaySaveObject()}
+                        {displaySaveObject(route.params.objectData.id, dispatch, favObjects)}
                     </Layout>
                 </Layout>
             </Layout>

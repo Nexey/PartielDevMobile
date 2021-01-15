@@ -1,20 +1,28 @@
 import React from 'react';
-import {Button, Layout, Text} from '@ui-kitten/components';
+import {Button, Card, Layout, Text} from '@ui-kitten/components';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
 const ObjectListItem = ({objectData, onClick, isFav = false}) => {
+    const Header = (props) => (
+        <Layout {...props}>
+            <Text category='h2'>
+                {objectData.name}
+            </Text>
+        </Layout>
+    );
+
     return (
-        <TouchableOpacity onPress={() => (onClick(objectData))}>
+        <Card style={styles.card} header={Header} status="info" onPress={() => (onClick(objectData))}>
             <Layout style={styles.container}>
                 <Layout style={styles.informationContainer}>
                     <Layout style={styles.title}>
-                        <Text category='h1'>
-                            {objectData.name}
+                        <Text category='h6'>
+                            {objectData.id}
                         </Text>
                     </Layout>
                 </Layout>
             </Layout>
-        </TouchableOpacity>
+        </Card>
     );
 };
 
@@ -50,5 +58,9 @@ const styles = StyleSheet.create({
     },
     stat: {
         marginLeft: 4,
+    },
+    card: {
+        flex: 1,
+        margin: 2,
     },
 });

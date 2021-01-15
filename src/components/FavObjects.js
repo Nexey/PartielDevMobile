@@ -18,23 +18,30 @@ const FavObjects = ({ navigation, favObjects }) => {
         return (favObjects.findIndex(i => i === objectID) !== -1);
     };
 
-    //*
     useEffect(() => {
         (async () => {
             await refreshObjects();
         })();
     }, [favObjects]);
-    //*/
 
     const getObjectById = (id) => {
+        /*
+        console.log(fakeObjects.find(obj => obj.id === id));
+
+        if (fakeObjects.findIndex(obj => obj.id === id) !== -1) {
+            console.log(fakeObjects.find(obj => obj.id === id).id);
+        }
+
         for (let test of fakeObjects) {
-            if (id === test.id)
+            if (id === test.id) {
                 return test;
+            }
         }
         return [];
-    }
+        //*/
 
-    //console.log(getObjectById(6454368));
+        return fakeObjects.find(obj => obj.id === id);
+    }
 
     const refreshObjects = async () => {
         let objects = [];
@@ -47,18 +54,6 @@ const FavObjects = ({ navigation, favObjects }) => {
             console.log("erreur xD");
         }
     };
-    /*
-    const navigateToRestaurantDetails = (restaurantID) => {
-        navigation.navigate("ViewRestaurant", { restaurantID });
-    };
-
-    const amIaFavRestaurant = (restaurantID) => {
-        if (favRestaurants.findIndex(i => i === restaurantID) !== -1) {
-            return true;
-        }
-        return false;
-    };
-    */
 
     const renderItem = ({item}) => {
         return (<ObjectListItem objectData={item} onClick={navigateToObjectDetails} isFav={amIaFavObject(item.id)} />);

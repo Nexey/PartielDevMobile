@@ -12,11 +12,12 @@ import { Store, Persistor } from './src/store/config';
 import AppNavigator from "./src/navigation/NavigationFusion";
 import {FontAwesome5IconsPack} from "./src/helpers/fontawesome5-icons";
 import {Provider} from "react-redux";
+import {MaterialCommunityIconsPack} from "./src/helpers/materialcommunity-icons";
 
 export default function App() {
     return (
         <>
-            <IconRegistry icons={[EvaIconsPack, FeatherIconsPack, MaterialIconsPack, FontAwesome5IconsPack]} />
+            <IconRegistry icons={[EvaIconsPack, FeatherIconsPack, MaterialIconsPack, FontAwesome5IconsPack, MaterialCommunityIconsPack]} />
             <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
                 <Provider store={Store} >
                     <PersistGate loading={null} persistor={Persistor}>

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Layout, List, Text, TopNavigation} from '@ui-kitten/components';
+import {Layout, List, Text, TopNavigation, Icon, Divider} from '@ui-kitten/components';
 import {StyleSheet, SafeAreaView} from 'react-native';
 import ObjectListItem from "./ObjectListItem";
 import fakeObjects from "../helpers/FakeObjects";
@@ -48,5 +48,10 @@ const styles = StyleSheet.create({
     },
     searchContainer: {
         marginBottom: 16,
+    },
+    tinyIcon: {
+        height:32,
+        width:32,
+        tintColor:'#32988c'
     },
 });

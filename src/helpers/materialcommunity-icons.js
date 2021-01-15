@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 function createIconsMap() {
     return new Proxy({}, {
@@ -11,17 +11,17 @@ function createIconsMap() {
 }
 
 const IconProvider = (name) => ({
-    toReactElement: (props) => FontAwesome5Icon({ name, ...props }),
+    toReactElement: (props) => MaterialCommunityIcon({ name, ...props }),
 });
 
-function FontAwesome5Icon({ name, style }) {
+function MaterialCommunityIcon({ name, style }) {
     const { height, tintColor, ...iconStyle } = StyleSheet.flatten(style);
     return (
-        <FontAwesome5 name={name} size={height} color={tintColor} style={iconStyle} />
+        <MaterialCommunityIcons name={name} size={height} color={tintColor} style={iconStyle} />
     );
 }
 
-export const FontAwesome5IconsPack = {
-    name: 'fontawesomefive',
+export const MaterialCommunityIconsPack = {
+    name: 'materialcommunity',
     icons: createIconsMap(),
 };

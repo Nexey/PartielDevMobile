@@ -13,6 +13,10 @@ fakeObjects.push(
         id:8964235,
         name:"Object 3",
     },
+    {
+        id:6875634,
+        name:"Object 4",
+    },
 );
 
 export default fakeObjects;
