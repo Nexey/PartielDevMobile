@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Divider, Icon, Layout, List, Text, TopNavigation, TopNavigationAction} from '@ui-kitten/components';
+import {Divider, Layout, List, Text, TopNavigation} from '@ui-kitten/components';
 import {SafeAreaView, StyleSheet, View, Image, ScrollView} from 'react-native';
 import { connect } from 'react-redux';
 import {displaySaveObject, mapStateToProps} from "../helpers/favActionHelpers";

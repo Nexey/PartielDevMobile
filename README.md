@@ -9,10 +9,10 @@
 * Annuler la recherche affiche les films en tendance : Complété (rappuyer sur l'un des deux boutons)
 * Un clic redirige sur la page du film : Complété
 * Affichage des informations générales d'un film : Complété
-* Affichage du casting d'un film (+nbr d'acteurs) : 
+* Affichage du casting d'un film (+nbr d'acteurs) : Complété
 * Possibilité de marquer un film comme visionné : Complété
 * Possibilité de retirer un film des visionnés : Complété
-* Affichage des films visionnés :Complété
+* Affichage des films visionnés : Complété
 * Un clic redirige sur la page du film : Complété
 
 

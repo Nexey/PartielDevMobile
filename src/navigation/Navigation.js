@@ -3,8 +3,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigation, BottomNavigationTab, Icon} from '@ui-kitten/components';
 import Home from "../components/Home";
-import MyObject from "../components/MovieDetails"
-import FavObjects from "../components/WatchedMovies";
 import {createStackNavigator} from "@react-navigation/stack";
 import MovieDetails from "../components/MovieDetails";
 import FavoriteMovies from "../components/WatchedMovies";

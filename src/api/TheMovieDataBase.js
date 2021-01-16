@@ -10,7 +10,6 @@ const callAPI = axios.create({
 });
 
 let params = {"movie_id":"", "page":"","query":"","param4":""};
-// /movie/464052?api_key=607c9fde520f8b987d23d524619af532&language=en-US
 
 const getTMDBResults = async(endpoint) => {
     try {
