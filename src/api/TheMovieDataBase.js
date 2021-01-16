@@ -2,14 +2,14 @@ import axios from "axios";
 import {listApiKeys} from "./ApiKey"
 
 const url       = "https://api.themoviedb.org/3";
-const url_end   = `?api_key=${listApiKeys.TMDB}&language=fr-FR&page=1`;
+const url_end   = `&api_key=${listApiKeys.TMDB}&language=fr-FR`;
 
 const callAPI = axios.create({
     baseURL: url,
     timeout: 1000,
 });
 
-let params = {"movie_id":"", "param2":"","param3":"","param4":""};
+let params = {"movie_id":"", "page":"","query":"","param4":""};
 // /movie/464052?api_key=607c9fde520f8b987d23d524619af532&language=en-US
 
 const getTMDBResults = async(endpoint) => {
@@ -20,8 +20,13 @@ const getTMDBResults = async(endpoint) => {
         console.log("API conection failed");
     }
 }
-export const getMoviesByPopularity = async() => {
-    return await getTMDBResults(`movie/popular`)
+export const getMoviesByPopularity = async(...arr) => {
+    arr.forEach(arg => {
+        if ("page" in arg)
+            params.page = arg.page;
+        else params.page = 1;
+    });
+    return await getTMDBResults(`movie/popular?page=${params.page}`)
 }
 
 export const getMovieByID = async(...arr) => {
@@ -29,6 +34,32 @@ export const getMovieByID = async(...arr) => {
         if ("movie_id" in arg)
             params.movie_id = arg.movie_id;
     });
+    // dud=dud est juste là pour pouvoir concatener url_end.
+    // cela n'aurait pas été nécessaire si on pouvait faire l'appel
+    // avec ?movie_id=id...
+    return await getTMDBResults(`/movie/${params.movie_id}?dud=dud`)
+}
 
-    return await getTMDBResults(`/movie/${params.movie_id}`)
+export const getMovieCreditsByID = async(...arr) => {
+    arr.forEach(arg => {
+        if ("movie_id" in arg)
+            params.movie_id = arg.movie_id;
+    });
+    // dud=dud est juste là pour pouvoir concatener url_end.
+    // cela n'aurait pas été nécessaire si on pouvait faire l'appel
+    // avec ?movie_id=id...
+    return await getTMDBResults(`/movie/${params.movie_id}/credits?dud=dud`)
+}
+
+export const getMoviesBySearch = async(...arr) => {
+    arr.forEach(arg => {
+        if ("page" in arg)
+            params.page = arg.page;
+        else params.page = 1;
+        if ("query" in arg)
+            params.query = arg.query
+        else params.query = "";
+    });
+
+    return await getTMDBResults(`search/movie?page=${params.page}&query=${params.query}&include_adult=false`)
 }

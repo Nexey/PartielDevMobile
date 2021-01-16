@@ -6,7 +6,7 @@ import {Layout, List, Spinner} from "@ui-kitten/components";
 import {mapStateToProps} from "../helpers/favActionHelpers";
 import {getMovieByID} from "../api/TheMovieDataBase";
 
-const FavoriteMovies = ({ navigation, favMovies }) => {
+const WatchedMovies = ({ navigation, favMovies }) => {
     const [favMoviesList, setFavMoviesList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -30,7 +30,7 @@ const FavoriteMovies = ({ navigation, favMovies }) => {
             if (response.data !== undefined)
                 await setFavMoviesList(favMoviesList => [...favMoviesList, response.data]);
         } catch(error) {
-            console.log(error.msg);
+            console.log(error.message);
         }
     }
 
@@ -42,13 +42,13 @@ const FavoriteMovies = ({ navigation, favMovies }) => {
                 await requestMovieByID(id);
             };
         } catch (error) {
-            console.log("erreur xD");
+            console.log(error.message);
         }
         await setIsLoading(false);
     };
 
     const renderItem = ({item}) => {
-        return (<MovieListItem movieDetails={item} onClick={navigateToObjectDetails} />);
+        return (<MovieListItem movieDetails={item} onClick={navigateToObjectDetails} isFav={amIaFavMovie(item.id)}/>);
     }
 
     return (
@@ -66,7 +66,7 @@ const FavoriteMovies = ({ navigation, favMovies }) => {
 };
 
 
-export default connect(mapStateToProps)(FavoriteMovies);
+export default connect(mapStateToProps)(WatchedMovies);
 
 const styles = StyleSheet.create({
     container: {

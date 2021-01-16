@@ -1,29 +1,102 @@
-import React, {useEffect} from 'react';
-import {Button, Icon, Layout, Text, TopNavigation, TopNavigationAction} from '@ui-kitten/components';
-import {SafeAreaView, StyleSheet } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Button, Divider, Icon, Layout, List, Text, TopNavigation, TopNavigationAction} from '@ui-kitten/components';
+import {SafeAreaView, StyleSheet, Image, ScrollView} from 'react-native';
 import { connect } from 'react-redux';
 import {displaySaveObject, mapStateToProps} from "../helpers/favActionHelpers";
+import {getMovieCreditsByID} from "../api/TheMovieDataBase";
 
 const MovieDetails = ({favMovies, dispatch, route}) => {
+    const [credits, setCredits] = useState({});
+
+    useEffect( () => {
+        (async() => {
+            let movieCredits = await getMovieCreditsByID({"movie_id": route.params.movieDetails.id});
+            console.log(JSON.stringify(movieCredits.data.cast));
+            await setCredits(movieCredits.data.cast);
+        })()
+    }, [route])
+
+    const renderItem = ({item}) => {
+        return (<Text>{item.name}</Text>);
+    }
+
+    const renderCredits = ({item}) => {
+        return (
+            <Layout>
+                <Text>Nom : {item.name}</Text>
+                <Text>Personnage joué : {item.character}</Text>
+            </Layout>
+        );
+    }
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{flex: 1}}>
             <TopNavigation title={route.params.movieDetails.title} alignment='center'/>
+            <ScrollView>
             <Layout style={styles.container}>
-                <Layout style={styles.informationContainer}>
-                    <Layout style={styles.title}>
-                        <Text category='h1'>
-                            Nom : {route.params.movieDetails.title}
-                        </Text>
-                        <Text category='h2' status="info">
-                            ID : {route.params.movieDetails.id}
-                        </Text>
-                    </Layout>
+                <Layout>
+                    <Image
+                        style={styles.tinyLogo}
+                        source={{
+                            uri: `https://image.tmdb.org/t/p/w500/${route.params.movieDetails.poster_path}`,
+                        }}
+                    />
                     <Layout>
                         {displaySaveObject(route.params.movieDetails.id, dispatch, favMovies)}
                     </Layout>
+                    <Layout>
+                        <Layout>
+                            <Text category='h2'>
+                                Sorti le :
+                            </Text>
+                            <Text category='h6'>
+                                {route.params.movieDetails.release_date}
+                            </Text>
+                        </Layout>
+                        <Layout>
+                            <Text category='h2'>
+                                Durée :
+                            </Text>
+                            <Text category='h6'>
+                                {route.params.movieDetails.runtime} minutes
+                            </Text>
+                        </Layout>
+
+                        <Layout>
+                            <Text category='h2'>
+                                Résumé :
+                            </Text>
+                            <Text>
+                                {route.params.movieDetails.overview}
+                            </Text>
+                        </Layout>
+                    </Layout>
                 </Layout>
             </Layout>
+                <Layout>
+                    <Text category='h2'>
+                        Genre{route.params.movieDetails.genres.length >= 1 ? 's':''} :
+                    </Text>
+                    <Layout>
+                        <List
+                            data={route.params.movieDetails.genres}
+                            renderItem={renderItem}
+                        />
+                    </Layout>
+                </Layout>
+                <Layout>
+                    <Text category='h2'>
+                        Crédits :
+                    </Text>
+                    <Layout>
+                        <List
+                            data={credits}
+                            renderItem={renderCredits}
+                            ItemSeparatorComponent={Divider}
+                        />
+                    </Layout>
+                </Layout>
+            </ScrollView>
         </SafeAreaView>
     );
 };
@@ -31,11 +104,6 @@ const MovieDetails = ({favMovies, dispatch, route}) => {
 export default connect(mapStateToProps)(MovieDetails);
 
 const styles = StyleSheet.create({
-    containerLoading: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     informationContainer: {
         flex: 1,
         marginLeft: 0,
@@ -65,5 +133,9 @@ const styles = StyleSheet.create({
     },
     stat: {
         marginLeft: 4,
+    },
+    tinyLogo: {
+        height:128,
+        width:128,
     },
 });

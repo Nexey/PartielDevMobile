@@ -1,27 +1,55 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Card, Layout, Text} from '@ui-kitten/components';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import {Image, StyleSheet, View, TouchableOpacity} from 'react-native';
+import {getMovieByID} from "../api/TheMovieDataBase";
 
 const MovieListItem = ({movieDetails, onClick, isFav = false}) => {
+    const [moreDetails, setMoreDetails] = useState({});
+
+    useEffect( () => {
+        (async() => {
+            let moreMovieDetails = await getMovieByID({"movie_id": movieDetails.id});
+            setMoreDetails(moreMovieDetails.data);
+        })()
+    }, [movieDetails])
+
+    const Footer = (props) => (
+        <View>
+            <View {...props} style={[props.style, styles.footerContainer]}>
+            </View>
+            <View>
+                <Text category='h6'>
+                    Sortie le : {moreDetails.release_date}
+                </Text>
+            </View>
+        </View>
+    );
+
     const Header = (props) => (
-        <Layout {...props}>
+        <View {...props}>
+            <Image
+                style={styles.tinyLogo}
+                source={{
+                    uri: `https://image.tmdb.org/t/p/w500/${moreDetails.poster_path}`,
+                }}
+            />
             <Text category='h2'>
-                {movieDetails.title}
+                {moreDetails.title}
             </Text>
-        </Layout>
+        </View>
     );
 
     return (
-        <Card style={styles.card} header={Header} status="info" onPress={() => (onClick(movieDetails))}>
-            <Layout style={styles.container}>
-                <Layout style={styles.informationContainer}>
-                    <Layout style={styles.title}>
+        <Card style={styles.card} header={Header} footer={Footer} onPress={() => (onClick(moreDetails))}>
+            <View style={styles.container}>
+                <View style={styles.informationContainer}>
+                    <View style={styles.title}>
                         <Text category='h6'>
-                            {movieDetails.id}
+                            {moreDetails.tagline}
                         </Text>
-                    </Layout>
-                </Layout>
-            </Layout>
+                    </View>
+                </View>
+            </View>
         </Card>
     );
 };
@@ -62,5 +90,16 @@ const styles = StyleSheet.create({
     card: {
         flex: 1,
         margin: 2,
+    },
+    tinyLogo: {
+        height:64,
+        width:64,
+    },
+    footerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+    },
+    footerControl: {
+        marginHorizontal: 2,
     },
 });

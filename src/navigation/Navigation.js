@@ -4,9 +4,10 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BottomNavigation, BottomNavigationTab, Icon} from '@ui-kitten/components';
 import Home from "../components/Home";
 import MyObject from "../components/MovieDetails"
-import FavObjects from "../components/FavoriteMovies";
+import FavObjects from "../components/WatchedMovies";
 import {createStackNavigator} from "@react-navigation/stack";
 import MovieDetails from "../components/MovieDetails";
+import FavoriteMovies from "../components/WatchedMovies";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 const SearchNavigation = createStackNavigator();
@@ -42,12 +43,12 @@ function searchStackScreens() {
 function favStackScreens() {
     return (
         <FavNavigation.Navigator
-            initialRouteName="ViewFav"
+            initialRouteName="ViewWatchedMovies"
         >
             <FavNavigation.Screen
-                name="ViewFav"
-                component={FavObjects}
-                options={{ title: 'Favoris' }}
+                name="ViewWatchedMovies"
+                component={FavoriteMovies}
+                options={{ title: 'Films vus' }}
             />
             <FavNavigation.Screen
                 name="ViewMovieDetail"
@@ -63,7 +64,7 @@ const BottomTabBar = ({ navigation, state }) => (
         selectedIndex={state.index}
         onSelect={index => navigation.navigate(state.routeNames[index])}>
         <BottomNavigationTab title='Home' icon={SearchIcon}/>
-        <BottomNavigationTab title='Mes Favoris' icon={StarIcon}>Test</BottomNavigationTab>
+        <BottomNavigationTab title='Films vus' icon={StarIcon}>Test</BottomNavigationTab>
     </BottomNavigation>
 );
 
@@ -73,7 +74,7 @@ const TabNavigator = () => (
         tabBar={props => <BottomTabBar {...props} />}
     >
         <Screen name='ViewHome' component={searchStackScreens}/>
-        <Screen name='ViewFavoris' component={favStackScreens}/>
+        <Screen name='ViewWatchedMovies' component={favStackScreens}/>
     </Navigator>
 );
 
