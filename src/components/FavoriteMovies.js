@@ -25,9 +25,13 @@ const FavoriteMovies = ({ navigation, favMovies }) => {
     }, [favMovies]);
 
     const requestMovieByID = async(id) => {
-        let response = await getMovieByID({"movie_id":id});
-        // TODO : Test sur le retour
-        await setFavMoviesList(favMoviesList => [...favMoviesList, response.data]);
+        try {
+            let response = await getMovieByID({"movie_id": id});
+            if (response.data !== undefined)
+                await setFavMoviesList(favMoviesList => [...favMoviesList, response.data]);
+        } catch(error) {
+            console.log(error.msg);
+        }
     }
 
     const refreshObjects = async () => {
