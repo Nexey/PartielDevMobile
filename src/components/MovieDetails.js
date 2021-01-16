@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Divider, Icon, Layout, List, Text, TopNavigation, TopNavigationAction} from '@ui-kitten/components';
-import {SafeAreaView, StyleSheet, Image, ScrollView} from 'react-native';
+import {SafeAreaView, StyleSheet, View, Image, ScrollView} from 'react-native';
 import { connect } from 'react-redux';
 import {displaySaveObject, mapStateToProps} from "../helpers/favActionHelpers";
 import {getMovieCreditsByID} from "../api/TheMovieDataBase";
@@ -11,7 +11,6 @@ const MovieDetails = ({favMovies, dispatch, route}) => {
     useEffect( () => {
         (async() => {
             let movieCredits = await getMovieCreditsByID({"movie_id": route.params.movieDetails.id});
-            console.log(JSON.stringify(movieCredits.data.cast));
             await setCredits(movieCredits.data.cast);
         })()
     }, [route])
@@ -30,70 +29,79 @@ const MovieDetails = ({favMovies, dispatch, route}) => {
     }
 
     return (
-        <SafeAreaView style={{flex: 1}}>
-            <TopNavigation title={route.params.movieDetails.title} alignment='center'/>
+        <SafeAreaView style={styles.container}>
             <ScrollView>
-            <Layout style={styles.container}>
-                <Layout>
-                    <Image
-                        style={styles.tinyLogo}
-                        source={{
-                            uri: `https://image.tmdb.org/t/p/w500/${route.params.movieDetails.poster_path}`,
-                        }}
-                    />
+                <Layout style={{margin:5, flex:1}}>
                     <Layout>
-                        {displaySaveObject(route.params.movieDetails.id, dispatch, favMovies)}
+                        <TopNavigation title={route.params.movieDetails.title} alignment='center'/>
                     </Layout>
                     <Layout>
                         <Layout>
-                            <Text category='h2'>
-                                Sorti le :
-                            </Text>
-                            <Text category='h6'>
-                                {route.params.movieDetails.release_date}
-                            </Text>
-                        </Layout>
-                        <Layout>
-                            <Text category='h2'>
-                                Durée :
-                            </Text>
-                            <Text category='h6'>
-                                {route.params.movieDetails.runtime} minutes
-                            </Text>
-                        </Layout>
-
-                        <Layout>
-                            <Text category='h2'>
-                                Résumé :
-                            </Text>
-                            <Text>
-                                {route.params.movieDetails.overview}
-                            </Text>
+                            <Layout style={{margin:5}}>
+                                <Image
+                                    style={styles.tinyLogo}
+                                    source={{
+                                        uri: `https://image.tmdb.org/t/p/w500/${route.params.movieDetails.poster_path}`,
+                                    }}
+                                />
+                            </Layout>
+                            <Layout style={{margin:5}}>
+                                {displaySaveObject(route.params.movieDetails.id, dispatch, favMovies)}
+                            </Layout>
+                            <Layout style={{margin:5}}>
+                                <Layout>
+                                    <Text category='h2'>
+                                        Sorti le :
+                                    </Text>
+                                    <Text category='h6'>
+                                        {route.params.movieDetails.release_date}
+                                    </Text>
+                                </Layout>
+                                <Layout>
+                                    <Text category='h2'>
+                                        Durée :
+                                    </Text>
+                                    <Text category='h6'>
+                                        {route.params.movieDetails.runtime} minutes
+                                    </Text>
+                                </Layout>
+                                <Layout>
+                                    <Text category='h2'>
+                                        Résumé :
+                                    </Text>
+                                    <Text>
+                                        {route.params.movieDetails.overview}
+                                    </Text>
+                                </Layout>
+                            </Layout>
                         </Layout>
                     </Layout>
-                </Layout>
-            </Layout>
-                <Layout>
-                    <Text category='h2'>
-                        Genre{route.params.movieDetails.genres.length >= 1 ? 's':''} :
-                    </Text>
                     <Layout>
-                        <List
-                            data={route.params.movieDetails.genres}
-                            renderItem={renderItem}
-                        />
+                        <Text category='h2'>
+                            Genre{route.params.movieDetails.genres.length >= 1 ? 's':''} :
+                        </Text>
+                        <Layout>
+                            <View>
+                                <List
+                                    data={route.params.movieDetails.genres}
+                                    renderItem={renderItem}
+                                />
+                            </View>
+                        </Layout>
                     </Layout>
-                </Layout>
-                <Layout>
-                    <Text category='h2'>
-                        Crédits :
-                    </Text>
                     <Layout>
-                        <List
-                            data={credits}
-                            renderItem={renderCredits}
-                            ItemSeparatorComponent={Divider}
-                        />
+                        <Text category='h2'>
+                            Crédits :
+                        </Text>
+                        <Layout>
+                            <View>
+                                <List
+                                    data={credits}
+                                    renderItem={renderCredits}
+                                    ItemSeparatorComponent={Divider}
+                                />
+                            </View>
+                        </Layout>
                     </Layout>
                 </Layout>
             </ScrollView>
