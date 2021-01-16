@@ -96,7 +96,7 @@ const Home = ({navigation, favMovies}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <TopNavigation title='MyApp' alignment='center'/>
+            <TopNavigation title='Rechercher des films' alignment='center'/>
             <Layout>
                 <Layout style={styles.searchContainer}>
                     <TextInput
