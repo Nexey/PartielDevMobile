@@ -2,22 +2,22 @@ import React from 'react';
 import {Button, Card, Layout, Text} from '@ui-kitten/components';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 
-const ObjectListItem = ({objectData, onClick, isFav = false}) => {
+const MovieListItem = ({movieDetails, onClick, isFav = false}) => {
     const Header = (props) => (
         <Layout {...props}>
             <Text category='h2'>
-                {objectData.name}
+                {movieDetails.title}
             </Text>
         </Layout>
     );
 
     return (
-        <Card style={styles.card} header={Header} status="info" onPress={() => (onClick(objectData))}>
+        <Card style={styles.card} header={Header} status="info" onPress={() => (onClick(movieDetails))}>
             <Layout style={styles.container}>
                 <Layout style={styles.informationContainer}>
                     <Layout style={styles.title}>
                         <Text category='h6'>
-                            {objectData.id}
+                            {movieDetails.id}
                         </Text>
                     </Layout>
                 </Layout>
@@ -26,7 +26,7 @@ const ObjectListItem = ({objectData, onClick, isFav = false}) => {
     );
 };
 
-export default ObjectListItem;
+export default MovieListItem;
 
 const styles = StyleSheet.create({
     informationContainer: {

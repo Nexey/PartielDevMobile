@@ -1,19 +1,19 @@
 import React from 'react';
 import {Button} from "@ui-kitten/components";
 
-export const saveObject = async (id, dispatch) => {
-    const action = { type: 'SAVE_OBJECT', id: id };
+export const saveMovie = async (id, dispatch) => {
+    const action = { type: 'SAVE_MOVIE', id: id };
     dispatch(action);
 }
 
-export const unsaveObject = async (id, dispatch) => {
-    const action = { type: 'DELETE_OBJECT', id: id };
+export const deleteMovie = async (id, dispatch) => {
+    const action = { type: 'DELETE_MOVIE', id: id };
     dispatch(action);
 }
 
 export const mapStateToProps = (state) => {
     return {
-        favObjects: state.favObjectID
+        favMovies: state.favMovieID
     }
 }
 
@@ -23,7 +23,7 @@ export const displaySaveObject = (id, dispatch, favObjects) => {
         return (
             <Button
                 title='Retirer des favoris'
-                onPress={() => unsaveObject(id, dispatch)}
+                onPress={() => deleteMovie(id, dispatch)}
             >
                 Retirer des favoris
             </Button>
@@ -33,7 +33,7 @@ export const displaySaveObject = (id, dispatch, favObjects) => {
     return (
         <Button
             title='Ajouter aux favoris'
-            onPress={() => saveObject(id, dispatch)}
+            onPress={() => saveMovie(id, dispatch)}
         >
             Ajouter aux favoris
         </Button>

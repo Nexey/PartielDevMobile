@@ -2,25 +2,25 @@ import React, {useEffect} from 'react';
 import {Button, Icon, Layout, Text, TopNavigation, TopNavigationAction} from '@ui-kitten/components';
 import {SafeAreaView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import {displaySaveObject, mapStateToProps, saveObject, unsaveObject} from "../helpers/favActionHelpers";
+import {displaySaveObject, mapStateToProps} from "../helpers/favActionHelpers";
 
-const MyObject = ({favObjects, dispatch, route}) => {
+const MovieDetails = ({favMovies, dispatch, route}) => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <TopNavigation title={route.params.objectData.name} alignment='center'/>
+            <TopNavigation title={route.params.movieDetails.title} alignment='center'/>
             <Layout style={styles.container}>
                 <Layout style={styles.informationContainer}>
                     <Layout style={styles.title}>
                         <Text category='h1'>
-                            Nom : {route.params.objectData.name}
+                            Nom : {route.params.movieDetails.title}
                         </Text>
                         <Text category='h2' status="info">
-                            ID : {route.params.objectData.id}
+                            ID : {route.params.movieDetails.id}
                         </Text>
                     </Layout>
                     <Layout>
-                        {displaySaveObject(route.params.objectData.id, dispatch, favObjects)}
+                        {displaySaveObject(route.params.movieDetails.id, dispatch, favMovies)}
                     </Layout>
                 </Layout>
             </Layout>
@@ -28,7 +28,7 @@ const MyObject = ({favObjects, dispatch, route}) => {
     );
 };
 
-export default connect(mapStateToProps)(MyObject);
+export default connect(mapStateToProps)(MovieDetails);
 
 const styles = StyleSheet.create({
     containerLoading: {
