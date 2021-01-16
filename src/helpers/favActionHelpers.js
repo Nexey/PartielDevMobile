@@ -2,12 +2,12 @@ import React from 'react';
 import {Button} from "@ui-kitten/components";
 
 export const saveObject = async (id, dispatch) => {
-    const action = { type: 'SAVE_OBJECT', value: id };
+    const action = { type: 'SAVE_OBJECT', id: id };
     dispatch(action);
 }
 
 export const unsaveObject = async (id, dispatch) => {
-    const action = { type: 'UNSAVE_OBJECT', value: id };
+    const action = { type: 'DELETE_OBJECT', id: id };
     dispatch(action);
 }
 

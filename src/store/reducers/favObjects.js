@@ -6,13 +6,13 @@ function favObjects(state = initialState, action) {
         case 'SAVE_OBJECT':
             nextState = {
                 ...state,
-                favObjectID: [...state.favObjectID, action.value]
+                favObjectID: [...state.favObjectID, action.id]
             };
             return nextState || state
-        case 'UNSAVE_OBJECT':
+        case 'DELETE_OBJECT':
             nextState = {
                 ...state,
-                favObjectID: state.favObjectID.filter(id => id !== action.value)
+                favObjectID: state.favObjectID.filter(id => id !== action.id)
             };
             return nextState || state
         default:
